@@ -29,7 +29,7 @@ select_columns = {"casosAcumulado" : "Casos Acumulados",
 #=====================
 
 
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
+server = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
 fig = px.choropleth_mapbox(df_states,locations="estado",color="casosNovos",
 
 center={"lat": -16.95, "lon": -47.87},
@@ -55,12 +55,12 @@ fig2.update_layout(
 
 
 
-app.layout = dbc.Container(
+server.layout = dbc.Container(
     dbc.Row([
        
         dbc.Col([
          html.Div([
-             #html.Img(id="logo",src=app.get_asset_url("logo_dark.png"), height=50),
+             #html.Img(id="logo",src=server.get_asset_url("logo_dark.png"), height=50),
              html.H5("Evolução COVID-19"),
              dbc.Button("BRASIL", color="primary", id="location-button", size="lg")
         ], style={}),
@@ -140,7 +140,7 @@ app.layout = dbc.Container(
 , fluid=True)
 # =================
 #  interactivity
-@app.callback(
+@server.callback(
  [ 
     Output("casos-recuperados-text", "children"),
     Output("em-acompanhamento-text", "children"),
@@ -176,7 +176,7 @@ def display_status(date, location):
     obitos_novos = "-" if df_data_on_date["obitosNovos"].isna().values[0] else f'{int(df_data_on_date["obitosNovos"].values[0]):,}'.replace(",", ".")
 
     return (recuperados_novos,acompanhamentos_novos,casos_acumulados,casos_novos,obitos_acumulado,obitos_novos)
-@app.callback(Output("line-graph", "figure"),
+@server.callback(Output("line-graph", "figure"),
 [
     Input("location-dropdown", "value"), Input("location-button", "children")
 ])
@@ -198,7 +198,7 @@ def plot_line_graph(plot_type,location):
         margin=dict(l=10,r=10,b=10,t=10)
     )
     return fig2
-@app.callback(
+@server.callback(
     Output("choropleth-map", "figure"),
     [Input("date-picker", "date")]
 )
@@ -212,7 +212,7 @@ def update_map(date):
       margin=go.layout.Margin(l=0,r=0,t=0,b=0), showlegend=False)
     return fig
 
-@app.callback(
+@server.callback(
     Output("location-button", "children"),
     [Input("choropleth-map", "clickData"), Input("location-button", "n_clicks")]
 )
@@ -224,4 +224,4 @@ def update_location(click_data, n_clicks):
     else:
         return "BRASIL"
 if __name__ =="__main__":
-    app.run_server(debug=True)
+    server.run_server(debug=True)
