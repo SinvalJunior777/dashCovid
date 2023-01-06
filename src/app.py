@@ -16,10 +16,12 @@ CENTER_LAT, CENTER_LON = -14.272572694355336, -51.25567404158474
 #df_states
 #df_brasil = df[df["regiao"] == "Brasil"]
 
-df_brasil=pd.read_csv("df_brasil.csv")
-df_states=pd.read_csv("df_states.csv")
+
+df_states=pd.read_csv(r"df_states.csv", sep=",")
+df_brasil=pd.read_csv(r"df_brasil.csv", sep=",")
 df_states_=df_states[df_states["data"] == "2020-05-13"]
-brazil_states= json.load(open("geojson/brazil_geo.json", "r"))
+
+brazil_states= json.load(open("brazil_geo.json", "r"))
 df_data= df_states[df_states["estado"] == "RJ"]
 select_columns = {"casosAcumulado" : "Casos Acumulados",
 "casosNovos": "Novos casos",
@@ -30,6 +32,7 @@ select_columns = {"casosAcumulado" : "Casos Acumulados",
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
+server = app.server
 fig = px.choropleth_mapbox(df_states,locations="estado",color="casosNovos",
 
 center={"lat": -16.95, "lon": -47.87},
@@ -224,6 +227,6 @@ def update_location(click_data, n_clicks):
     else:
         return "BRASIL"
 
-server = app.server
+
 if __name__ =="__main__":
     app.run_server(debug=True)
