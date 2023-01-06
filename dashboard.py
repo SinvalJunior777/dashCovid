@@ -31,7 +31,7 @@ select_columns = {"casosAcumulado" : "Casos Acumulados",
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
 fig = px.choropleth_mapbox(df_states,locations="estado",color="casosNovos",
-server = app.server
+
 center={"lat": -16.95, "lon": -47.87},
  geojson=brazil_states, color_continuous_scale="Redor", opacity=0.4,
 hover_data={"casosAcumulado":True, "casosNovos": True, "obitosNovos": True, "estado": True})
