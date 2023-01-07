@@ -32,7 +32,7 @@ select_columns = {"casosAcumulado" : "Casos Acumulados",
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
-server = app.server
+
 fig = px.choropleth_mapbox(df_states,locations="estado",color="casosNovos",
 
 center={"lat": -16.95, "lon": -47.87},
@@ -129,15 +129,10 @@ app.layout = dbc.Container(
               dcc.Graph(id="line-graph", figure=fig2)
             ]),
            
-        ],md=5, style={"padding" : "25px", "background-color" : "#242424"}),
+        ],md=12, style={"padding" : "25px", "background-color" : "#242424"}),
        
         
-        dbc.Col([
-            dcc.Loading(id="loading-1", children=[
-                dcc.Graph(id="choropleth-map", figure=fig,style={"height" : "100vh"})
-            ])
-            
-        ],md=7)
+       
         ], class_name='g-0')
         
 , fluid=True)
@@ -229,4 +224,4 @@ def update_location(click_data, n_clicks):
 
 
 if __name__ =="__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False)
