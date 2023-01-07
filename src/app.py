@@ -68,6 +68,7 @@ app.layout = dbc.Container(
              html.H5("Evolução COVID-19"),
              dbc.Button("BRASIL", color="primary", id="location-button", size="lg")
         ], style={}),
+        html.H1("dados de março de 2020 ate maio de 2021", style={"margin-top" : "40px"}),
         html.P("informe a data na qual deseja obter informaçoes:", style={"margin-top" : "40px"}),
             html.Div(id="div-test", children=[
                 dcc.DatePickerSingle(
