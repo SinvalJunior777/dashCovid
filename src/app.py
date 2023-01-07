@@ -32,6 +32,7 @@ select_columns = {"casosAcumulado" : "Casos Acumulados",
 
 
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.SUPERHERO])
+server=app.server
 
 fig = px.choropleth_mapbox(df_states,locations="estado",color="casosNovos",
 
@@ -156,7 +157,7 @@ def display_status(date, location):
        
     else:
        
-       df_data_on_date = df_states[(df_states["estado"] == location) & (df_states["data"] == date)]
+      df_data_on_date= df_brasil[df_brasil["data"] == date]
        
        
  
