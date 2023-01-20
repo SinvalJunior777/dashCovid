@@ -251,6 +251,6 @@ def update_location(click_data, n_clicks):
     
     else:
         return "BRASIL"
-
+server=app.server
 if __name__ == "__main__":
     app.run_server(debug=False, port=8050)
